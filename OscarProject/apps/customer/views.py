@@ -7,6 +7,17 @@ import csv
 from django.views import View
 from .forms import *
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from . import helper
+from rest_framework.decorators import api_view
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import mixins
+from rest_framework import generics
+from django.http import JsonResponse
+from apps.customer.serializers import *
+from rest_framework import viewsets
+from django.views.decorators.csrf import csrf_exempt
 #####################################################################################################################
 
 
@@ -49,4 +60,11 @@ def createpayment(request):
 
     context = {'Pay_form': Pay_form}
     return render(request, 'adminpanel/PaymentEntry.html', context)
+
+@csrf_exempt
+def user_api(request):
+    users = User.objects.all()
+    serializer = UserSerializers(users, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
 

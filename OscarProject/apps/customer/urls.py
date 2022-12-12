@@ -6,6 +6,7 @@ urlpatterns=[
     path('createuser/', views.createuser, name= 'createuser'),
     path('createpurchase/', views.createpurchase, name= 'createpurchase'),
     path('createpayment/', views.createpayment, name= 'createpayment'),
+    path('user_api/api/', views.user_api)
     
 
 ]
