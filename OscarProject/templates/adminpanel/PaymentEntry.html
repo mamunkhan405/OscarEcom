@@ -1,0 +1,93 @@
+{% extends 'oscar/dashboard/layout.html' %}
+{% load currency_filters %}
+{% load i18n %}
+
+{% load static %}
+
+{% block dashboard_content %}
+<!--Page title-->
+
+<div class="table-header">
+    <h2>User Input Panel</h2>
+</div>
+<div class="mb-5">
+    <ul class="nav nav-tabs text-center">
+        <li class="nav-item">
+          <a class="nav-link {% if '/dashboard/createuser/' in request.path %}active{% endif %}" aria-current="page" href="{% url 'users:createuser' %}">Create User</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if '/dashboard/createpurchase/' in request.path %}active{% endif %}" href="{% url 'users:createpurchase' %}">Create Purchase</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if '/dashboard/createpayment/' in request.path %}active{% endif %}" href="{% url 'users:createpayment' %}">Payment</a>
+        </li>
+       
+      </ul>
+</div>
+  <!-- Page Content -->
+    <br>
+    <section id="packages" class="features">
+        <div class="container">
+            
+            
+            <div class="row">
+                <!-- <div class="col-md-3" style="background-image: url('{% static 'images/packagebg1.jpg' %}') "></div> -->
+                <div class="col-md-12">
+                    <div class="card">
+                        <form class="card-body" method="POST" action="{% url 'users:createpayment' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            <div class="form-group">
+                                {{ Pay_form.as_p }}
+
+                               
+                            </div>
+                                                    
+                            <div class="form-group">
+                                <input class="btn btn-primary margin-right-none" type="submit" value="Save" data-toast
+                                data-toast-position="topRight" data-toast-type="success" data-toast-icon="icon-check-circle"
+                                data-toast-title="Success!" data-toast-message="Information added successfuly.">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <br>
+
+        </div>
+    </section>
+
+    <div class="container mb-4">
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                    <tr class="bg-secondary">
+                        <th scope="col">#</th>
+                        <th scope="col">Purchase ID</th>
+                        <th scope="col">Amount</th>
+                        
+                        
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in payments %}
+                        <td>{{forloop.counter}}</td>
+                        <td scope="row">{{i.purchid}}</td>
+                        <td>{{i.amount}}</td>
+                        
+                        
+                    </tr>
+                    {% endfor %}
+                    
+                    </tbody>
+                </table>
+            </div>
+        
+            
+        </div>
+   </div>
+
+{% endblock %}
